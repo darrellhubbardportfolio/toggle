@@ -1,10 +1,58 @@
 
-body { margin: 0; padding: 0;}
-main {width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center;}
-.toggle {border: 1px solid gray; background-color: white; border-radius: 30px; display: flex; align-items: center; justify-content: start; padding: 4px; width: 58px;}
-.toggle-btn {border: 1px solid lightgray; background-color: white; border-radius: 100%; width: 28px; height: 28px; box-shadow: 0 0 4px gray;}
-.toggle-btn:hover {cursor: pointer}
-.toggle-btn[data-toggle="false"] {transform: translateX(0);}
-.toggle-btn[data-toggle="true"] {transform: translateX(100%); box-shadow: none;}
-@keyframes toggleSlideOn {from {transform: translateX(0);} to {transform: translateX(100%);}}
-@keyframes toggleSlideOff {from {transform: translateX(100%);} to {tranform: translateX(0);}}
+body { 
+    margin: 0; 
+    padding: 0;
+}
+main {
+    width: 100vw; 
+    height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+.toggle {
+    border: 1px solid lightgray; 
+    background-color: white; 
+    border-radius: 45px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: start; 
+    padding: 4px; 
+    width: 136px;
+}
+.toggle-switch {
+    border: 1px solid lightgray; 
+    background-color: white; 
+    border-radius: 100%; 
+    width: 68px; 
+    height: 68px; 
+}
+.toggle-switch:hover {
+    cursor: pointer
+}
+.toggle-switch[data-value="false"] {
+    transform: translateX(0);
+    box-shadow: none;
+}
+.toggle-switch[data-value="true"] {
+    transform: translateX(100%); 
+    box-shadow: 0 0 8px lightgray;
+}
+@keyframes toggleSlideOn {
+    from {
+        transform: translateX(0);
+    } 
+    to {
+        transform: translateX(100%);
+    }
+
+}
+@keyframes toggleSlideOff {
+    from {
+        transform: translateX(100%);
+    } 
+    to {
+        transform: translateX(0);
+    }
+
+}

@@ -67,14 +67,12 @@ app.get("/", function (req, res) {
 });
 
 // get toggle button status at this API route
-app.get("/api/toggle/:id", function (req, res) {
+app.get("/api/toggle", function (req, res) {
 
-    let { id } = req.params;
-
-    let query = "SELECT * FROM ToggleButton WHERE id = ?";
+    let query = "SELECT * FROM ToggleButton";
 
     // get data from database
-    db.get(query, [ id ], function (err, row) {
+    db.get(query, function (err, row) {
         if (err) {
             console.error(err);
         }
@@ -87,11 +85,15 @@ app.post("/api/toggle/:id/update", function (req, res) {
 
     let { id } = req.params;
 
-    let { status } = req.body;
+    let { model, key, value } = req.body;
 
-    let query = "UPDATE ToggleButton SET isActive = ?, lastUpdate = CURRENT_TIMESTAMP WHERE id = ?";
+    let query = "UPDATE " + model + " SET " +  key + " = ?, lastUpdate = CURRENT_TIMESTAMP WHERE id = ?";
 
-    db.run(query, [ status, id ], function (err) {
+    // check data
+    console.log(req.body);
+    // console.log(req.params);
+
+    db.run(query, [ value, id ], function (err) {
         if (err) {
             console.error(err);
         }

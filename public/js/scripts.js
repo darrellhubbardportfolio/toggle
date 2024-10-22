@@ -1,97 +1,98 @@
 
 // fetch from server the state of toggle button and then set it.
-fetch("/api/toggle/1", {method: "GET"})
+fetch("/api/toggle")
 .then(req => {
     return req.json();
 })
 .then(res => {
-    // change the state of the ui
-    let toggleButton = document.querySelector(".toggle-btn[data-id='1']");
-    let toggle = toggleButton.parentNode;
-    console.log(toggle);
     // check results
     console.log(res);
-    // alter the background color of the parent node by changing it's data-toggle
-    switch (res["isActive"]) {
-        case "false":
-            toggle.style.backgroundColor = "white";
-            toggle.style.border = "1px solid lightgray";
-            break;
-        case "true":
-            toggle.style.backgroundColor = "lightgray";
-            toggle.style.border = "0";
-            break;
-    }
-    toggleButton.setAttribute("data-toggle", res['isActive']);
+    // create first component
+    var toggleBtn1 = new Toggle("ToggleButton", "isActive", res['isActive'], res['id']);
 })
-.catch(err => { 
-    console.log(err); 
+.catch(err => {
+    console.log(err);
 });
 
-function toggleOn (e) {
+// create the toggle class
+class Toggle {
 
-    // implement code 
-    e.style.animation = "toggleSlideOn 0.5s forwards";
-    e.parentNode.style.backgroundColor = "lightgray";
-    e.parentNode.style.border = "0";
-    console.log("toggle on");
-}
-
-function toggleOff (e) {
-
-    // implement code 
-    e.style.animation = "toggleSlideOff 0.5s forwards";
-    e.parentNode.style.backgroundColor = "white";
-    e.parentNode.style.border = "1px solid lightgray";
-    console.log("toggle off");
-}
-
-function updateOnToggle (e) {
-
-    let toggleId = e.getAttribute("data-id");
-    let toggleState = e.getAttribute("data-toggle");
-
-    switch (toggleState) {
-
-        case "false":
-
-            // call the toggleOn function 
-            toggleOn(e);
-            // reset value 
-            toggleState = "true";
-            e.setAttribute("data-toggle", "true");
-            // send new state to server 
-            submitToggleUpdate(toggleId, toggleState);
-            break;
-
-        case "true":
-
-            // call the toggleOff function
-            toggleOff(e);
-            // reset value
-            toggleState = "false";
-            e.setAttribute("data-toggle", "false");
-            // send new state to server.
-            submitToggleUpdate(toggleId, toggleState);
-            break;
-
+    constructor (model, key, value, id) {
+        this.container = document.querySelector("main"); // container where the toggle-switch will reside
+        this.toggle = document.createElement("div");
+        this.toggle_switch = document.createElement("button"); // the switch
+        this.model = model;
+        this.key = key;
+        this.value = value;
+        this.id = id;
+        // prepare data for update
+        this.data = new Object({ 
+            model: this.model, 
+            key: this.key, 
+            value: this.value
+        });
+        // add properties
+        this.toggle.className = "toggle";
+        this.toggle_switch.className = "toggle-switch";
+        this.toggle_switch.dataset.model = this.data.model;
+        this.toggle_switch.dataset.key = this.key;
+        this.toggle_switch.dataset.value = this.value;
+        this.toggle_switch.dataset.id = this.id;
+        // add functions to switch
+        this.toggle_switch.addEventListener("click", () => {
+            console.log("clicked button");
+            this.updateToggle();
+        });
+        // add each element in correct place
+        this.toggle.append(this.toggle_switch);
+        this.container.append(this.toggle);
     }
-}
-
-// use fetch request POST method to update the status of the toggle button with data-id of 1;
-function submitToggleUpdate (id, status) {
     
-    let url = "/api/toggle/1/update";
+    updateToggle () {
+        // use switch statement to change the ui
+        switch (this.toggle_switch.dataset.value) {
+            case "false":
+                console.log("turn on");
+                this.toggleOn();
+                this.data.value = "true";
+                this.toggle_switch.dataset.value = "true";
+                this.submitUpdate(this.data);
+                break;
+            case "true":
+                console.log("turn off");
+                this.toggleOff();
+                this.data.value = "false";
+                this.toggle_switch.dataset.value = "false";
+                this.submitUpdate(this.data);
+                break;
+        }
+    }
+    async submitUpdate (data) {
 
-    fetch(url, {
-        method: "POST",
-        headers: {
-            'Content-Type': "application/json"
-        },
-        body: JSON.stringify({id: id, status: status})
-    })
-    .then(req => {
-        return req.json()
-    })
-    .catch(err => console.error(err));
+        try {
+                const response = await fetch("/api/toggle/" + this.toggle_switch.dataset.id + "/update", { 
+                    method: "POST", 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(data)
+                });
+                const results = await response.json();
+                console.log(results);
+            
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    toggleOn () {
+
+        // implement code 
+        this.toggle_switch.style.animation = "toggleSlideOn 0.5s forwards";
+        console.log("toggle on");
+    }
+
+    toggleOff () {
+    
+        // implement code 
+        this.toggle_switch.style.animation = "toggleSlideOff 0.5s forwards";
+        console.log("toggle off");
+    };
 }
