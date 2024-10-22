@@ -3,13 +3,15 @@ body {
     margin: 0; 
     padding: 0;
 }
+
 main {
     width: 100vw; 
-    /* height: 100vh;  */
+    height: 100vh; 
     display: flex; 
     align-items: center; 
     justify-content: center;
 }
+
 .bi {
     display: flex;
     align-items: center;
@@ -70,7 +72,7 @@ main {
     border: 8px solid gold; 
     transform: translateX(100%); 
     background-color: white;
-    /* box-shadow: 0 0 8px lightgray; */
+    box-shadow: 0 0 8px gray;
 }
 
 .toggle-night-mode> :nth-child(1)> .bi-moon {
