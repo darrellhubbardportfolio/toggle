@@ -108,15 +108,13 @@ body {
 
 .toggle-night-mode> :nth-child(1)> .bi-moon {
     color: white;
-    transform: translateY(16px, -16px) rotateZ(-60deg);
-    animation-name: moon;
+    animation-name: fallingMoon;
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }
 .toggle-day-mode> :nth-child(1)> .bi-brightness-high {
     color: gold;
-    transform: translate(16px);
-    animation-name: sunrise;
+    animation-name: atSunrise;
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }
@@ -141,7 +139,7 @@ body {
 }
 
 /* animate the sunrise and moon */
-@keyframes sunrise {
+@keyframes atSunrise {
     from {
         transform: translateY(16px);
     }
@@ -150,9 +148,9 @@ body {
     }
 }
 
-@keyframes moon {
+@keyframes fallingMoon {
     from {
-        transform: translate(16px, -16px) rotateZ(-60deg);
+        transform: translate(16px, -12px) rotateZ(-60deg);
     }
     to {
         transform: translate(0);

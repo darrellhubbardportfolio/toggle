@@ -100,6 +100,8 @@ class Toggle {
         this.toggle_switch.style.animation = "toggleSlideOn 0.5s forwards";
         this.toggle.classList.remove("toggle-night-mode");
         this.toggle.classList.add("toggle-day-mode");
+        // add animation to the sun?
+        this.sun_label.style.animation = "atSunrise 1s forwards";
         console.log("toggle on");
     }
 
@@ -109,6 +111,8 @@ class Toggle {
         this.toggle_switch.style.animation = "toggleSlideOff 0.5s forwards";
         this.toggle.classList.remove("toggle-day-mode");
         this.toggle.classList.add("toggle-night-mode");
+        // add animation to the sun?
+        this.moon_label.style.animation = "fallingMoon 1s forwards";
         console.log("toggle off");
     };
 }
