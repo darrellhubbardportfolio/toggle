@@ -35,9 +35,10 @@ body {
     justify-content: start; 
     position: relative;
     padding: 8px; 
-    width: calc((68px * 2) + 16px + 8px); /* toggle-switch's width + 2* toggle padding or 16 px + 2* border */
-    height: calc(68px + 16px + 8px);
+    width: calc((53px * 2) + 16px + 8px); /* toggle-switch's width + 2* toggle padding or 16 px + 2* border */
+    height: calc(53px + 16px + 8px);
     overflow: hidden;
+    transform: rotate3d(1, -1, 1, 15deg);
 }
 /* give the parent another name for night mode and day mode */
 .toggle-day-mode {
@@ -50,13 +51,36 @@ body {
     border: 4px solid lightslategray;
     background-color: rgb(36, 46, 46); /* darkslategray; */
 }
-
+.toggle-switch::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background-color: white;
+    min-width: 45px;
+    max-width: 45px;
+    height: 45px;
+    border-radius: 100%;
+}
 .toggle-switch {
     border-radius: 100%; 
-    width: 68px; 
-    height: 68px; 
+    width: 53px; 
+    height: 53px; 
     position: absolute;
     z-index: 1;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(55, 55, 55);
+}
+.toggle-switch::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    background-color: rgb(55, 55, 55);
+    min-width: 45px;
+    max-width: 45px;
+    height: 45px;
+    border-radius: 100%;
 }
 .toggle-switch:hover {
     cursor: pointer
@@ -64,14 +88,20 @@ body {
 .toggle-switch[data-value="false"] {
     transform: translateX(0);
     box-shadow: none;
-    background-color: rgb(55, 55, 55);
+    /* background-color: rgb(55, 55, 55); */
     border: 8px solid white; 
+}
+.toggle-switch[data-value="false"]::after {
+    background-color: rgb(55, 55, 55);
 }
 .toggle-switch[data-value="true"] {
     border: 8px solid gold; 
     transform: translateX(100%); 
-    background-color: white;
+    /* background-color: white; */
     box-shadow: 0 0 8px gray;
+}
+.toggle-switch[data-value="true"]::after {
+    background-color: lightgoldenrodyellow;
 }
 
 .toggle-night-mode> :nth-child(1)> .bi-moon {
