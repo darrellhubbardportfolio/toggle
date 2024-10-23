@@ -19,11 +19,13 @@ body {
 .bi-brightness-high {
     color: transparent;
     font-size: 30px;
+    justify-content: start;
 }
 
 .bi-moon {
     color: transparent;
     font-size: 30px;
+    justify-content: end;
 }
 
 .toggle {
