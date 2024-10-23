@@ -108,9 +108,17 @@ body {
 
 .toggle-night-mode> :nth-child(1)> .bi-moon {
     color: white;
+    transform: translateY(16px, -16px) rotateZ(-60deg);
+    animation-name: moon;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 .toggle-day-mode> :nth-child(1)> .bi-brightness-high {
     color: gold;
+    transform: translate(16px);
+    animation-name: sunrise;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 
 @keyframes toggleSlideOn {
@@ -130,4 +138,23 @@ body {
         transform: translateX(0);
     }
 
+}
+
+/* animate the sunrise and moon */
+@keyframes sunrise {
+    from {
+        transform: translateY(16px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes moon {
+    from {
+        transform: translate(16px, -16px) rotateZ(-60deg);
+    }
+    to {
+        transform: translate(0);
+    }
 }
